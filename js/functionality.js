@@ -557,7 +557,7 @@ function updateEvent(addEdit) {
     clearForms();
 
 }
-
+let searchGuestData = [];
 function selectEvent() {
 
     addEdit("event", "edit");
@@ -586,16 +586,18 @@ function selectEvent() {
 
     console.log("JSON.stringify(guestData): " + JSON.stringify(guestData) + " (typeof guestData): " + (typeof guestData));
 
+    searchGuestData = [];
+
     for (let i = 0; i < guestData.length; i++) {
         console.log("guestData[i].events.length: " + guestData[i].events.length)
         for (let j = 0; j < guestData[i].events.length; j++) {
-
+            searchGuestData.push({ "email": guestData[i].email, "details": guestData[i].email + ":" + guestData[i].events[j].details });
             console.log("j: " + j)
             console.log("guestData[i].events[j].task: " + guestData[i].events[j].task);
             console.log("eventObj[whichEvent].task: " + eventObj[whichEvent].task);
             if (guestData[i].events[j].task === eventObj[whichEvent].task) {
-                seatingHTML = seatingHTML + `<li class="list-group-item"> <i class="fas fa-trash" onClick="deleteTask('${eventObj[whichEvent].task}','${guestData[i].email}')"></i> ${guestData[i].email + " seat: " + guestData[i].events[j].seat}</li>
-                <li class="list-group-item list-group-item-action list-group-item-dark">${guestData[i].events[j].details}</li>`
+                seatingHTML = seatingHTML + `<li class="list-group-item" data-search="${guestData[i].email}"> <i class="fas fa-trash" onClick="deleteTask('${eventObj[whichEvent].task}','${guestData[i].email}')"></i> ${guestData[i].email + " seat: " + guestData[i].events[j].seat}</li>
+                <li class="list-group-item list-group-item-action list-group-item-dark" data-search="${guestData[i].email}">${guestData[i].events[j].details}</li>`
             }
         }
 
@@ -615,6 +617,22 @@ function selectEvent() {
 
         });
 
+    }
+
+}
+
+function filterGuests() {
+    let searchStr = document.querySelector("input[name='guestSearch']").value;
+    for (let i = 0; i < searchGuestData.length; i++) {
+        if (searchGuestData[i].details.indexOf(searchStr) === -1) {
+            [].forEach.call(document.querySelectorAll("li[data-search='" + searchGuestData[i].email + "']"), (e) => {
+                e.classList.add("hide");
+            });
+        } else {
+            [].forEach.call(document.querySelectorAll("li[data-search='" + searchGuestData[i].email + "']"), (e) => {
+                e.classList.remove("hide");
+            });
+        }
     }
 
 }
