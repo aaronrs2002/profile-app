@@ -623,8 +623,9 @@ function selectEvent() {
 
 function filterGuests() {
     let searchStr = document.querySelector("input[name='guestSearch']").value;
+    searchStr = searchStr.toLowerCase();
     for (let i = 0; i < searchGuestData.length; i++) {
-        if (searchGuestData[i].details.indexOf(searchStr) === -1) {
+        if (searchGuestData[i].details.toLowerCase().indexOf(searchStr) === -1) {
             [].forEach.call(document.querySelectorAll("li[data-search='" + searchGuestData[i].email + "']"), (e) => {
                 e.classList.add("hide");
             });
