@@ -621,6 +621,7 @@ function selectEvent() {
 
 }
 
+
 function filterGuests() {
     let searchStr = document.querySelector("input[name='guestSearch']").value;
     searchStr = searchStr.toLowerCase();
