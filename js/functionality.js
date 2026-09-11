@@ -474,6 +474,19 @@ if (localStorage.getItem("taskList")) {
 
     for (let i = 0; i < tempTasks.length; i++) {
         if (compareList.indexOf(tempTasks[i].task) === -1) {
+            let priority = "Standard Priority";
+
+            if (tempTasks[i].details.indexOf("warning") !== -1) {
+                priority = "Elevated Priority";
+            }
+
+
+            if (tempTasks[i].details.indexOf("danger") !== -1) {
+                priority = "High Priority";
+            }
+
+
+
             tempEventObj.push({
                 accountName: "",
                 task: tempTasks[i].task,
@@ -483,7 +496,7 @@ if (localStorage.getItem("taskList")) {
                 eventEmail: "",
                 eventPhone: "",
                 eventCoordinator: "",
-                taskDetails: tempTasks[i].taskDetails,
+                taskDetails: priority + " - " + tempTasks[i].taskDetails,
 
             });
         }
