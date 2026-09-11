@@ -410,6 +410,9 @@ function addEdit(module, addEdit) {
     }
 
     if (module === "profile" && addEdit === "edit") {
+
+        document.getElementById("taskListTarget").innerHTML = "";
+        document.getElementById("seatAssignment").innerHTML = "";
         [].forEach.call(document.querySelectorAll("[data-module='profile'][data-addedit='add']"), (e) => {
             e.classList.add("hide");
         });
@@ -419,7 +422,6 @@ function addEdit(module, addEdit) {
         });
         globalAlert("alert-success", "Your in Edit Mode For profiles.");
     }
-
 
 
 }
