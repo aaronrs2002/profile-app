@@ -1,5 +1,6 @@
 let guestData = [];
 let activeUser = "";
+let seats = [];
 
 
 const ValidateProfile = (fields) => {
@@ -497,6 +498,7 @@ if (localStorage.getItem("taskList")) {
                 eventPhone: "",
                 eventCoordinator: "",
                 taskDetails: priority + " - " + tempTasks[i].taskDetails,
+                seats: []
 
             });
         }
@@ -801,3 +803,32 @@ function deleteEvent() {
 [{"accountName":"","task":"new","startDate":"2025-11-02","eventTime":"","eventAddress":"","eventEmail":"","eventPhone":"","eventCoordinator":"","taskDetails":"new"},{"accountName":"","task":"dfdrgerab","startDate":"2025-11-06","eventTime":"","eventAddress":"","eventEmail":"","eventPhone":"","eventCoordinator":"","taskDetails":"No Details"},{"accountName":"","task":"new try task here","startDate":"2026-06-11","eventTime":"","eventAddress":"","eventEmail":"","eventPhone":"","eventCoordinator":"","taskDetails":"No Details"}]
 
 */
+
+
+function addSeat() {
+    let seat = document.querySelector("input[name='newSeat']").value;
+    seats = [...seats, seat];
+    document.getElementById("seatListTarget").innerHTML = "";
+    let seatListHTML = "";
+    for (let i = 0; i < seats.length; i++) {
+        seatListHTML = seatListHTML + `<span class="badge text-bg-secondary"><i class="fas fa-trash" onClick="deleteSeat(${1})"></i> ${seats[i]}</span>`;
+    }
+    document.getElementById("seatListTarget").innerHTML = seatListHTML;
+    document.querySelector("input[name='newSeat']").value = "";
+}
+
+function deleteSeat(seatIteration) {
+    let tempSeats = [];
+    for (let i = 0; i < seats.length; i++) {
+        if (i !== Number(seatIteration)) {
+            tempSeats.push(seats[i]);
+        }
+    }
+    seats = tempSeats;
+    document.getElementById("seatListTarget").innerHTML = "";
+    let seatListHTML = "";
+    for (let i = 0; i < seats.length; i++) {
+        seatListHTML = seatListHTML + `<span class="badge text-bg-secondary"><i class="fas fa-trash" onClick="deleteSeat(${1})"></i> ${seats[i]}</span>`;
+    }
+    document.getElementById("seatListTarget").innerHTML = seatListHTML;
+}
