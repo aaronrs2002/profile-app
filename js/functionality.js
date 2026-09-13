@@ -160,12 +160,16 @@ function selectProfile() {
     activeUser = guestData[whichProfile].email;
 
     let accountsObj = [];
+
+    let seatAssignmentHTML = "";
     if (guestData[0].events) {
 
         for (let i = 0; i < guestData[whichProfile].events.length; i++) {
 
-            if (accountsObj.indexOf(guestData[whichProfile].events[i].account) === -1) {
-                accountsObj.push(guestData[whichProfile].events[i].account);
+            console.log("JSON.stringify(guestData[whichProfile].events[i]): " + JSON.stringify(guestData[whichProfile].events[i]));
+
+            if (accountsObj.indexOf(guestData[whichProfile].events[i].task) === -1) {
+                accountsObj.push(guestData[whichProfile].events[i].task);
             }
         }
 
@@ -181,27 +185,29 @@ function selectProfile() {
 
         /* document.querySelector("select[name='accountsTarget']").innerHTML = accountsTargetHTML;*/
 
-        let seatAssignmentHTML = "";
-
+        console.log("activeUser: " + activeUser + " - guestData[whichProfile].email: " + guestData[whichProfile].email)
         if (activeUser === guestData[whichProfile].email) {
             for (let i = 0; i < guestData[whichProfile].events.length; i++) {
                 if (usedAssigned.indexOf(guestData[whichProfile].events[i].task) === -1) {
+                    console.log("guestData[whichProfile].events[i].task: " + guestData[whichProfile].events[i].task)
                     seatAssignmentHTML = seatAssignmentHTML + `<li class="list-group-item"><i class="fas fa-trash" onClick="deleteTask('${guestData[whichProfile].events[i].task}','${guestData[whichProfile].events[i].email}')"></i> - <label>${guestData[whichProfile].events[i].task}: seat</label><input type="text" class="form-control" name="${guestData[whichProfile].events[i].task}-seat" value="${guestData[whichProfile].events[i].seat}" placeholder="Assigned Seat for ${guestData[whichProfile].events[i].task}"/>
                     <div><label>${guestData[whichProfile].events[i].task} Detials</label><textarea class="form-control" name="${guestData[whichProfile].events[i].task}-details" >${guestData[whichProfile].events[i].details}</textarea> </div>
-                    </li>`
+                    </li>`;
 
                     usedAssigned.push(guestData[whichProfile].events[i].task);
                 }
             }
         }
 
+        console.log("seatAssignmentHTML: " + seatAssignmentHTML);
 
-        document.getElementById("seatAssignment").innerHTML = seatAssignmentHTML;
+
+
 
     }
     selectEvent()
     addEdit('profile', 'edit');
-
+    document.getElementById("seatAssignment").innerHTML = seatAssignmentHTML;
 
 
     /*
