@@ -63,6 +63,8 @@ function clearForms() {
 
     });
 
+    document.getElementById("seatListTarget").innerHTML = "";
+
     // document.querySelector("button[data-addedit='edit'][data-module='event']").classList.add("hide");
 }
 
@@ -515,6 +517,19 @@ if (localStorage.getItem("taskList")) {
 
 buildEventMenu(eventObj);
 
+
+
+function updateSeats() {
+    console.log("Calling seats: " + seats);
+    document.getElementById("seatListTarget").innerHTML = "";
+    let seatListHTML = "";
+    for (let i = 0; i < seats.length; i++) {
+        console.log("seat: " + seats[i]);
+        seatListHTML = seatListHTML + `<span class="badge text-bg-secondary"><i class="fas fa-trash" onClick="deleteSeat(${1})"></i> ${seats[i]}</span>`;
+    }
+    document.getElementById("seatListTarget").innerHTML = seatListHTML;
+}
+
 function updateEvent(addEdit) {
 
     let whichEvent = document.querySelector("select[name='eventList']").value;
@@ -561,6 +576,9 @@ function updateEvent(addEdit) {
             eventObj[whichEvent].eventPhone = document.querySelector("[name='eventPhone']").value;
             eventObj[whichEvent].eventCoordinator = document.querySelector("[name='eventCoordinator']").value;
             eventObj[whichEvent].taskDetails = document.querySelector("textarea[name='eventDetails']").value;
+            eventObj[whichEvent].seats = seats;
+
+            updateSeats();
 
 
 
@@ -597,7 +615,9 @@ function selectEvent() {
     document.querySelector("[name='eventPhone']").value = eventObj[whichEvent].eventPhone;
     document.querySelector("[name='eventCoordinator']").value = eventObj[whichEvent].eventCoordinator;
     document.querySelector("textarea[name='eventDetails']").value = eventObj[whichEvent].taskDetails;
-
+    seats = eventObj[whichEvent].seats;
+    console.log("JSON.stringify(eventObj[whichEvent]): " + JSON.stringify(eventObj[whichEvent]));
+    updateSeats();
 
     let seatingHTML = "";
 
@@ -609,9 +629,7 @@ function selectEvent() {
         console.log("guestData[i].events.length: " + guestData[i].events.length)
         for (let j = 0; j < guestData[i].events.length; j++) {
             searchGuestData.push({ "email": guestData[i].email, "details": guestData[i].email + ":" + guestData[i].events[j].details });
-            console.log("j: " + j)
-            console.log("guestData[i].events[j].task: " + guestData[i].events[j].task);
-            console.log("eventObj[whichEvent].task: " + eventObj[whichEvent].task);
+
             if (guestData[i].events[j].task === eventObj[whichEvent].task) {
                 seatingHTML = seatingHTML + `<li class="list-group-item" data-search="${guestData[i].email}"> <i class="fas fa-trash" onClick="deleteTask('${eventObj[whichEvent].task}','${guestData[i].email}')"></i> ${guestData[i].email + " seat: " + guestData[i].events[j].seat}</li>
                 <li class="list-group-item list-group-item-action list-group-item-dark" data-search="${guestData[i].email}">${guestData[i].events[j].details}</li>`
@@ -805,15 +823,11 @@ function deleteEvent() {
 */
 
 
+
 function addSeat() {
     let seat = document.querySelector("input[name='newSeat']").value;
     seats = [...seats, seat];
-    document.getElementById("seatListTarget").innerHTML = "";
-    let seatListHTML = "";
-    for (let i = 0; i < seats.length; i++) {
-        seatListHTML = seatListHTML + `<span class="badge text-bg-secondary"><i class="fas fa-trash" onClick="deleteSeat(${1})"></i> ${seats[i]}</span>`;
-    }
-    document.getElementById("seatListTarget").innerHTML = seatListHTML;
+    updateSeats();
     document.querySelector("input[name='newSeat']").value = "";
 }
 
@@ -825,10 +839,5 @@ function deleteSeat(seatIteration) {
         }
     }
     seats = tempSeats;
-    document.getElementById("seatListTarget").innerHTML = "";
-    let seatListHTML = "";
-    for (let i = 0; i < seats.length; i++) {
-        seatListHTML = seatListHTML + `<span class="badge text-bg-secondary"><i class="fas fa-trash" onClick="deleteSeat(${1})"></i> ${seats[i]}</span>`;
-    }
-    document.getElementById("seatListTarget").innerHTML = seatListHTML;
+    updateSeats();
 }
