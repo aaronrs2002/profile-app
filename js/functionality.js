@@ -831,7 +831,18 @@ function deleteEvent() {
 
 
 function addSeat() {
+
+    if (document.querySelector("select[name='eventList']").value === "default") {
+        globalAlert("alert-warning", "Which event are you adding seats to?");
+        return false;
+    }
+
+
     let seat = document.querySelector("input[name='newSeat']").value;
+    if (seat.length === 0) {
+        globalAlert("alert-warning", "Type a seat name or ID into the field.");
+        return false;
+    };
     seats = [...seats, seat];
     updateSeats();
     document.querySelector("input[name='newSeat']").value = "";
