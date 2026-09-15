@@ -397,6 +397,11 @@ function editProfile() {
             if (guestData[whichProfile].events[i].task === eventObj[j].task) {
 
                 for (let a = 0; a < eventObj[j].seats.length; a++) {
+
+                    if (eventObj[j].seats[a].occupied === guestData[whichProfile].email) {
+                        eventObj[j].seats[a].occupied = "default";
+                    }
+
                     if (eventObj[j].seats[a].seat === guestData[whichProfile].events[i].seat) {
                         eventObj[j].seats[a].occupied = guestData[whichProfile].email;
                     }
