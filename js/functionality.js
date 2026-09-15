@@ -205,19 +205,31 @@ function selectProfile() {
 
                             for (let j = 0; j < eventObj[i].seats.length; j++) {
 
-                                let isSelected = "";
-                                if (eventObj[a].seats[j].seat === guestData[whichProfile].events[i].seat) {
-                                    isSelected = "selected";
+                                try {
+                                    if (eventObj[i].seats[j].seat) {
+
+                                        let isSelected = "";
+                                        console.log("eventObj[a].seats[j].seat: " + eventObj[a].seats[j].seat);
+                                        console.log("guestData[whichProfile].events[i].seat: " + guestData[whichProfile].events[i].seat);
+                                        if (eventObj[a].seats[j].seat === guestData[whichProfile].events[i].seat) {
+                                            isSelected = "selected";
+                                        }
+
+                                        let disabledOption = "";
+                                        if (eventObj[a].seats[j].occupied !== "default") {
+                                            disabledOption = " disabled='true' ";
+                                        }
+                                        if (eventObj[a].seats[j]) {
+                                            activeSeatListHTML = activeSeatListHTML + `<option ${isSelected} ${disabledOption} value='${eventObj[a].seats[j].seat}'>${eventObj[a].seats[j].seat}</option>`;
+                                            console.log("eventObj[a].seats[j].seat: " + eventObj[a].seats[j].seat);
+                                        }
+                                    }
+                                } catch (error) {
+                                    console.log("error: " + error);
+
                                 }
 
-                                let disabledOption = "";
-                                if (eventObj[a].seats[j].occupied !== "default") {
-                                    disabledOption = " disabled='true' ";
-                                }
-                                if (eventObj[a].seats[j]) {
-                                    activeSeatListHTML = activeSeatListHTML + `<option ${isSelected} ${disabledOption} value='${eventObj[a].seats[j].seat}'>${eventObj[a].seats[j].seat}</option>`;
-                                    console.log("eventObj[a].seats[j]: " + eventObj[a].seats[j]);
-                                }
+
 
                             }
 
@@ -792,8 +804,8 @@ function updateProfileTask() {
             let seatVal = "N/A";
             let detailsVal = "No details yet";
             try {
-                if (document.querySelector("input[name='" + e.value + "-seat']").value) {
-                    seatVal = document.querySelector("input[name='" + e.value + "-seat']").value;
+                if (document.querySelector("select[name='" + e.value + "-seat']").value) {
+                    seatVal = document.querySelector("select[name='" + e.value + "-seat']").value;
                 }
             } catch (error) {
                 console.log("Seat input available yet");
@@ -889,6 +901,21 @@ function deleteTask(task, email) {
          }
      }*/
 
+    if (localStorage.getItem("eventObj")) {
+        eventObj = JSON.parse(localStorage.getItem("eventObj"))
+    }
+    for (let i = 0; i < eventObj.length; i++) {
+
+        if (task === eventObj[i].task) {
+
+            for (let j = 0; j < eventObj[i].seats.length; j++) {
+                if (email === eventObj[i].seats[j].occupied) {
+                    eventObj[i].seats[j].occupied = "default";
+                }
+            }
+        }
+    }
+    localStorage.setItem("eventObj", JSON.stringify(eventObj));
 
 
     console.log("whichProfile: " + whichProfile);
