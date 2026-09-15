@@ -630,6 +630,7 @@ function updateSeats() {
         seatListHTML = seatListHTML + `<span class="badge text-bg-secondary"  data-seat="${seats[i].seat}"><i class="fas fa-trash" onClick="deleteSeat(${i})"></i> ${seats[i].seat}</span>`;
     }
     document.getElementById("seatListTarget").innerHTML = seatListHTML;
+    document.querySelector("input[name='newSeat']").focus();
 }
 
 function updateEvent(addEdit) {
@@ -1003,7 +1004,6 @@ function addSeat() {
         globalAlert("alert-warning", "Which event are you adding seats to?");
         return false;
     }
-
 
     let seat = document.querySelector("input[name='newSeat']").value;
     if (seat.length === 0) {
