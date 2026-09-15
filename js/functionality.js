@@ -241,7 +241,7 @@ function selectProfile() {
 
 
 
-                    seatAssignmentHTML = seatAssignmentHTML + `<li class="list-group-item"><i class="fas fa-trash" onClick="deleteTask('${guestData[whichProfile].events[i].task}','${guestData[whichProfile].events[i].email}')"></i> - <label>${guestData[whichProfile].events[i].task}: seat</label>
+                    seatAssignmentHTML = seatAssignmentHTML + `<li class="list-group-item"><i class="fas fa-trash" onClick="deleteTask('${guestData[whichProfile].events[i].task}','${guestData[whichProfile].events[i].user}')"></i> - <label>${guestData[whichProfile].events[i].task}: seat</label>
                     
 
                     <select class="form-control"  name="${guestData[whichProfile].events[i].task}-seat" >
