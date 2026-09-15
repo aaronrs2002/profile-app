@@ -206,11 +206,16 @@ function selectProfile() {
                             for (let j = 0; j < eventObj[i].seats.length; j++) {
 
                                 let isSelected = "";
-                                if (eventObj[a].seats[j] === guestData[whichProfile].events[i].seat) {
+                                if (eventObj[a].seats[j].seat === guestData[whichProfile].events[i].seat) {
                                     isSelected = "selected";
                                 }
+
+                                let disabledOption = "";
+                                if (eventObj[a].seats[j].occupied !== "default") {
+                                    disabledOption = " disabled='true' ";
+                                }
                                 if (eventObj[a].seats[j]) {
-                                    activeSeatListHTML = activeSeatListHTML + `<option ${isSelected} value='${eventObj[a].seats[j]}'>${eventObj[a].seats[j]}</option>`;
+                                    activeSeatListHTML = activeSeatListHTML + `<option ${isSelected} ${disabledOption} value='${eventObj[a].seats[j].seat}'>${eventObj[a].seats[j].seat}</option>`;
                                     console.log("eventObj[a].seats[j]: " + eventObj[a].seats[j]);
                                 }
 
@@ -361,13 +366,46 @@ function editProfile() {
 
     console.log("whichProfile: " + whichProfile);
     console.log("JSON.stringify(guestData): " + JSON.stringify(guestData));
+
+    if (localStorage.getItem('eventObj')) {
+        eventObj = JSON.parse(localStorage.getItem('eventObj'))
+    }
+
+
+
+
     for (let i = 0; i < guestData[whichProfile].events.length; i++) {
         console.log("guestData[whichProfile].events[i].seat: " + guestData[whichProfile].events[i].seat)
 
         guestData[whichProfile].events[i].seat = document.querySelector("select[name='" + guestData[whichProfile].events[i].task + "-seat']").value;
+
+
+        for (let j = 0; j < eventObj.length; j++) {
+
+            if (guestData[whichProfile].events[i].task === eventObj[j].task) {
+
+                for (let a = 0; a < eventObj[j].seats.length; a++) {
+                    if (eventObj[j].seats[a].seat === guestData[whichProfile].events[i].seat) {
+                        eventObj[j].seats[a].occupied = guestData[whichProfile].email;
+                    }
+
+                }
+
+
+            }
+
+        }
+
+
+
+
+
+
+
+
         guestData[whichProfile].events[i].details = document.querySelector("textarea[name='" + guestData[whichProfile].events[i].task + "-details']").value;
     }
-
+    localStorage.setItem("eventObj", JSON.stringify(eventObj));
 
 
     guestData[whichProfile].fName = document.querySelector("[name='fName']").value;
@@ -576,8 +614,8 @@ function updateSeats() {
     document.getElementById("seatListTarget").innerHTML = "";
     let seatListHTML = "";
     for (let i = 0; i < seats.length; i++) {
-        console.log("seat: " + seats[i]);
-        seatListHTML = seatListHTML + `<span class="badge text-bg-secondary"  data-seat="${seats[i]}"><i class="fas fa-trash" onClick="deleteSeat(${i})"></i> ${seats[i]}</span>`;
+        console.log("seat: " + seats[i].seat);
+        seatListHTML = seatListHTML + `<span class="badge text-bg-secondary"  data-seat="${seats[i].seat}"><i class="fas fa-trash" onClick="deleteSeat(${i})"></i> ${seats[i].seat}</span>`;
     }
     document.getElementById("seatListTarget").innerHTML = seatListHTML;
 }
@@ -787,7 +825,7 @@ function updateProfileTask() {
                             isSelected = "selected";
                         }
 
-                        activeSeatListHTML = activeSeatListHTML + `<option ${isSelected} value='${eventObj[i].seats[j]}'>${eventObj[i].seats[j]}</option>`;
+                        activeSeatListHTML = activeSeatListHTML + `<option ${isSelected} value='${eventObj[i].seats[j].seat}'>${eventObj[i].seats[j].seat}</option>`;
                     }
 
                 }
@@ -940,7 +978,7 @@ function addSeat() {
         globalAlert("alert-warning", "Type a seat name or ID into the field.");
         return false;
     };
-    seats = [...seats, seat];
+    seats = [...seats, { "seat": seat, "occupied": "default" }];
     updateSeats();
     document.querySelector("input[name='newSeat']").value = "";
 }
