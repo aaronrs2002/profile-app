@@ -821,11 +821,16 @@ function updateProfileTask() {
                     for (let j = 0; j < eventObj[i].seats.length; j++) {
 
                         let isSelected = "";
-                        if (eventObj[i].seats[j] === seatVal) {
+                        if (eventObj[i].seats[j].seat === seatVal) {
                             isSelected = "selected";
                         }
 
-                        activeSeatListHTML = activeSeatListHTML + `<option ${isSelected} value='${eventObj[i].seats[j].seat}'>${eventObj[i].seats[j].seat}</option>`;
+                        let disabledOption = "";
+                        if (eventObj[i].seats[j].occupied !== "default") {
+                            disabledOption = " disabled='true' ";
+                        }
+
+                        activeSeatListHTML = activeSeatListHTML + `<option ${isSelected} ${disabledOption} value='${eventObj[i].seats[j].seat}'>${eventObj[i].seats[j].seat}</option>`;
                     }
 
                 }
