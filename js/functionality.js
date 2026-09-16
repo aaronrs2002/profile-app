@@ -65,6 +65,9 @@ function clearForms() {
 
     document.getElementById("seatListTarget").innerHTML = "";
 
+    document.getElementById("taskListTarget").innerHTML = "";
+    document.getElementById("seatAssignment").innerHTML = "";
+
     // document.querySelector("button[data-addedit='edit'][data-module='event']").classList.add("hide");
 }
 
@@ -149,6 +152,7 @@ function selectProfile() {
 
     let whichProfile = document.querySelector("select[name='guestList']").value;
     if (whichProfile === "default") {
+        clearForms();
         return false;
     }
     let eventObj = [];
@@ -520,9 +524,11 @@ function addEdit(module, addEdit) {
     }
 
     if (module === "profile" && addEdit === "edit") {
+        if (document.querySelector("select[name='guestList']").value === "default") {
+            document.getElementById("taskListTarget").innerHTML = "";
+            document.getElementById("seatAssignment").innerHTML = "";
+        }
 
-        document.getElementById("taskListTarget").innerHTML = "";
-        document.getElementById("seatAssignment").innerHTML = "";
         [].forEach.call(document.querySelectorAll("[data-module='profile'][data-addedit='add']"), (e) => {
             e.classList.add("hide");
         });
