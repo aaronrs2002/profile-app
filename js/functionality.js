@@ -714,6 +714,7 @@ function selectEvent() {
     let whichEvent = document.querySelector("select[name='eventList']").value;
     if (whichEvent === "default") {
         whichEvent = 0;
+        document.querySelector("select[name='eventList']").selectedIndex = 1;
     }
 
 
