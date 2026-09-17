@@ -207,10 +207,10 @@ function selectProfile() {
                     for (let a = 0; a < eventObj.length; a++) {
                         if (guestData[whichProfile].events[i].task === eventObj[a].task) {
 
-                            for (let j = 0; j < eventObj[i].seats.length; j++) {
+                            for (let j = 0; j < eventObj[a].seats.length; j++) {
 
                                 try {
-                                    if (eventObj[i].seats[j].seat) {
+                                    if (eventObj[a].seats[j].seat) {
 
                                         let isSelected = "";
                                         console.log("eventObj[a].seats[j].seat: " + eventObj[a].seats[j].seat);
