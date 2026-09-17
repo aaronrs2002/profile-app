@@ -171,7 +171,7 @@ function selectProfile() {
     let accountsObj = [];
 
     let seatAssignmentHTML = "";
-    if (guestData[0].events) {
+    if (guestData[whichProfile].events) {
 
         for (let i = 0; i < guestData[whichProfile].events.length; i++) {
 
