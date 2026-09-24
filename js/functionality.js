@@ -1037,3 +1037,55 @@ function deleteSeat(seatIteration) {
     seats = tempSeats;
     updateSeats();
 }
+
+
+/*upload and download seat list*/
+function importSeats(file) {
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+        let rows = event.target.result.split(/\r?\n/);
+
+        // Remove header
+        if (rows[0].trim().toLowerCase() === "seat") {
+            rows.shift();
+        }
+
+        rows.forEach(function (row) {
+            let seatName = row.trim();
+
+            if (seatName !== "") {
+                seats.push({
+                    seat: seatName,
+                    occupied: "default"
+                });
+            }
+        });
+
+        updateSeats();
+    };
+
+    reader.readAsText(file);
+
+}
+
+
+
+/*start filter search seats*/
+
+function filterSeats() {
+    let searchStr = document.querySelector("input[name='seatSearch']").value;
+    searchStr = searchStr.toLowerCase();
+    [].forEach.call(document.querySelectorAll(".badge[data-seat]"), (e) => {
+        console.log("e.dataset.seat: " + e.dataset.seat);
+        if (e.dataset.seat.indexOf(searchStr) !== -1) {
+            e.classList.remove("hide");
+            console.log("We are adding hide to: " + e.dataset.seat);
+        } else {
+            e.classList.add("hide");
+            console.log("We are REMOVING hide to: " + e.dataset.seat);
+        }
+
+    })
+
+}

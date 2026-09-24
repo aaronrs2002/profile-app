@@ -122,10 +122,40 @@
                             <label>Seating:</label>
                             <!--<div class="text-danger"><i>Function currently being developed. Check back for updates.</i>
                             </div>-->
-                            <div id="seatListTarget"></div>
-                            <input type="text" class="form-control" name="newSeat" placeholder="Seat ID/name" />
-                            <button class="btn btn-block btn-secondary py-2" onClick="addSeat()">Add seat to
-                                venue</button>
+                            <ul class="list-unstyled">
+                                <li><!--<input type="text" name="seatSearch" onKeyUp="filterSeats()"
+                                        placeholder="Seat Search" class="form-control" />-->
+
+
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Seat Search"
+                                            name="seatSearch" />
+                                        <button class="btn btn-outline-secondary"
+                                            onClick="filterSeats()">Search</button>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <div id="seatListTarget"></div>
+                                </li>
+                                <li><input type="text" class="form-control" name="newSeat" placeholder="Seat ID/name" />
+                                </li>
+                                <li>
+
+                                    <button class="btn btn-block btn-secondary py-2" onClick="addSeat()">Add seat to
+                                        venue</button>
+                                </li>
+                                <li><label>Upload CSV formated seat list</label></li>
+                                <li>
+                                    <input type="file" accept=".csv" onchange="importSeats(this.files[0])"
+                                        placeholder="Upload CSV formated seat list" />
+                                </li>
+
+                            </ul>
+
+
+
+
                             <hr />
 
                             <h3>Guest Info</h3>
