@@ -15,7 +15,8 @@
     border: #ff0000 1px solid;
 }
 
-#seatListTarget {
-    max-height: 500px;
+#seatListTarget,
+#seatingTarget {
+    max-height: 200px;
     overflow-y: scroll;
 }
