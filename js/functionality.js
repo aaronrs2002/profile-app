@@ -755,6 +755,7 @@ function selectEvent() {
                 if (document.querySelector(".badge[data-seat='" + guestData[i].events[j].seat + "']")) {
                     document.querySelector(".badge[data-seat='" + guestData[i].events[j].seat + "']").classList.remove("text-bg-secondary");
                     document.querySelector(".badge[data-seat='" + guestData[i].events[j].seat + "']").classList.add("text-bg-danger");
+                    document.querySelector(".badge[data-seat='" + guestData[i].events[j].seat + "']").title = "Guest email: " + guestData[i].email;
                 }
 
 
