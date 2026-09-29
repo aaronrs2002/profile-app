@@ -1079,7 +1079,7 @@ function filterSeats() {
     searchStr = searchStr.toLowerCase();
     [].forEach.call(document.querySelectorAll(".badge[data-seat]"), (e) => {
         console.log("e.dataset.seat: " + e.dataset.seat);
-        if (e.dataset.seat.indexOf(searchStr) !== -1) {
+        if (e.dataset.seat.toLowerCase().indexOf(searchStr) !== -1) {
             e.classList.remove("hide");
             console.log("We are adding hide to: " + e.dataset.seat);
         } else {
