@@ -148,6 +148,10 @@ function selectProfile() {
     let usedAssigned = [];
     // selectedTasks = JSON.parse(localStorage.getItem("selectedTasks"));
 
+    if ((typeof seats) !== "object") {
+        seats = [];
+    }
+
 
 
     let whichProfile = document.querySelector("select[name='guestList']").value;
@@ -206,6 +210,8 @@ function selectProfile() {
 
                     for (let a = 0; a < eventObj.length; a++) {
                         if (guestData[whichProfile].events[i].task === eventObj[a].task) {
+
+
 
                             for (let j = 0; j < eventObj[a].seats.length; j++) {
 
