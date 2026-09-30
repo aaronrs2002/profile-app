@@ -134,7 +134,7 @@ function buildSelectMenu() {
         let guestSelectList = "<option value='default'>Select Profile</option>";
 
         for (let i = 0; i < guestData.length; i++) {
-            guestSelectList = guestSelectList + "<option data-email='" + guestData[i].email + "' value='" + i + "'>" + guestData[i].fName + " " + guestData[i].lName + "</option>"
+            guestSelectList = guestSelectList + "<option data-email='" + guestData[i].email.toLowerCase() + "' value='" + i + "'>" + guestData[i].fName + " " + guestData[i].lName + "</option>"
         }
 
 
@@ -334,7 +334,7 @@ function selectProfile() {
 function filterProfiles() {
 
     addEdit('profile', 'edit');
-    let searchProfile = document.querySelector("input[name='profileSearch']").value;
+    let searchProfile = document.querySelector("input[name='profileSearch']").value.toLowerCase();
     if (searchProfile.length === 0) {
         globalAlert("alert-warning", "Who are you looking for?");
         return false;
