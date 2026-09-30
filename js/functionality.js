@@ -134,7 +134,7 @@ function buildSelectMenu() {
         let guestSelectList = "<option value='default'>Select Profile</option>";
 
         for (let i = 0; i < guestData.length; i++) {
-            guestSelectList = guestSelectList + "<option value='" + i + "'>" + guestData[i].fName + " " + guestData[i].lName + "</option>"
+            guestSelectList = guestSelectList + "<option data-email='" + guestData[i].email + "' value='" + i + "'>" + guestData[i].fName + " " + guestData[i].lName + "</option>"
         }
 
 
@@ -326,6 +326,29 @@ function selectProfile() {
         }
 
     }
+
+
+}
+
+
+function filterProfiles() {
+
+    addEdit('profile', 'edit');
+    let searchProfile = document.querySelector("input[name='profileSearch']").value;
+    if (searchProfile.length === 0) {
+        globalAlert("alert-warning", "Who are you looking for?");
+        return false;
+    }
+
+    if (document.querySelector("option[data-email='" + searchProfile + "']")) {
+        document.querySelector("option[data-email='" + searchProfile + "']").selected = true;
+    } else {
+        globalAlert("alert-warning", "I could not locate " + searchProfile);
+        return false;
+    }
+
+    selectProfile();
+    /*option data-email*/
 
 
 }
