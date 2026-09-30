@@ -1040,7 +1040,7 @@ function deleteEvent() {
     buildEventMenu(eventObj);
     clearForms();
 
-    document.querySelector(`[data - warning='deleteEventShow']`).classList.add('hide');
+    document.querySelector(`[data-warning='deleteEventShow']`).classList.add('hide');
 
     // document.querySelector(`[data - warning= 'deleteEventBt']`).classList.remove('hide');
 
