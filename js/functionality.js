@@ -78,7 +78,7 @@ function buildEventMenu(eventObj) {
 
     for (let i = 0; i < eventObj.length; i++) {
         if (tempEventList.indexOf(eventObj[i].task) === -1) {
-            eventObjHTML = eventObjHTML + "<option value='" + i + "'>" + eventObj[i].task + "</option>";
+            eventObjHTML = eventObjHTML + "<option data-event='" + eventObj[i].task + "' value='" + i + "'>" + eventObj[i].task + "</option>";
             tempEventList.push(eventObj[i].task);
         }
 
@@ -331,23 +331,39 @@ function selectProfile() {
 }
 
 
-function filterProfiles() {
+function filterAll(inputName) {
 
-    addEdit('profile', 'edit');
-    let searchProfile = document.querySelector("input[name='profileSearch']").value.toLowerCase();
-    if (searchProfile.length === 0) {
+
+    let searchThis = document.querySelector("input[name='" + inputName + "']").value.toLowerCase();
+    if (searchThis.length === 0) {
         globalAlert("alert-warning", "Who are you looking for?");
         return false;
     }
 
-    if (document.querySelector("option[data-email='" + searchProfile + "']")) {
-        document.querySelector("option[data-email='" + searchProfile + "']").selected = true;
+
+
+    if (inputName === "eventSearch") {
+        if (document.querySelector("option[data-event='" + searchThis + "']")) {
+            document.querySelector("option[data-event='" + searchThis + "']").selected = true;
+        } else {
+            globalAlert("alert-warning", "I could not locate " + searchThis);
+            return false;
+        }
+
+        /*data-event*/
+        selectEvent();
     } else {
-        globalAlert("alert-warning", "I could not locate " + searchProfile);
-        return false;
+        addEdit('profile', 'edit');
+        if (document.querySelector("option[data-email='" + searchThis + "']")) {
+            document.querySelector("option[data-email='" + searchThis + "']").selected = true;
+        } else {
+            globalAlert("alert-warning", "I could not locate " + searchThis);
+            return false;
+        }
+        selectProfile();
     }
 
-    selectProfile();
+
     /*option data-email*/
 
 
