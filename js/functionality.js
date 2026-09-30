@@ -671,16 +671,21 @@ buildEventMenu(eventObj);
 
 
 
-function updateSeats() {
-    console.log("Calling seats: " + seats);
-    document.getElementById("seatListTarget").innerHTML = "";
-    let seatListHTML = "";
-    for (let i = 0; i < seats.length; i++) {
-        console.log("seat: " + seats[i].seat);
-        seatListHTML = seatListHTML + `<span class="badge text-bg-secondary"  data-seat="${seats[i].seat}"><i class="fas fa-trash" onClick="deleteSeat(${i})"></i> ${seats[i].seat}</span>`;
+function updateSeats(theSeats) {
+    console.log("Calling theSeats: " + theSeats);
+    if (theSeats) {
+        document.getElementById("seatListTarget").innerHTML = "";
+        let seatListHTML = "";
+        for (let i = 0; i < theSeats.length; i++) {
+            console.log("seat: " + theSeats[i].seat);
+            seatListHTML = seatListHTML + `<span class="badge text-bg-secondary"  data-seat="${theSeats[i].seat}"><i class="fas fa-trash" onClick="deleteSeat(${i})"></i> ${theSeats[i].seat}</span>`;
+        }
+        document.getElementById("seatListTarget").innerHTML = seatListHTML;
+        document.querySelector("input[name='newSeat']").focus();
+    } else {
+        globalAlert("alert-warning", "seat list error: " + theSeats);
     }
-    document.getElementById("seatListTarget").innerHTML = seatListHTML;
-    document.querySelector("input[name='newSeat']").focus();
+
 }
 
 function updateEvent(addEdit) {
@@ -731,7 +736,7 @@ function updateEvent(addEdit) {
             eventObj[whichEvent].taskDetails = document.querySelector("textarea[name='eventDetails']").value;
             eventObj[whichEvent].seats = seats;
 
-            updateSeats();
+            updateSeats(seats);
 
 
 
@@ -776,7 +781,7 @@ function selectEvent() {
     document.querySelector("textarea[name='eventDetails']").value = eventObj[whichEvent].taskDetails;
     seats = eventObj[whichEvent].seats;
     console.log("JSON.stringify(eventObj[whichEvent]): " + JSON.stringify(eventObj[whichEvent]));
-    updateSeats();
+    updateSeats(seats);
 
 
     let seatingHTML = "";
@@ -1063,7 +1068,7 @@ function addSeat() {
         return false;
     };
     seats = [...seats, { "seat": seat, "occupied": "default" }];
-    updateSeats();
+    updateSeats(seats);
     document.querySelector("input[name='newSeat']").value = "";
 }
 
@@ -1075,7 +1080,7 @@ function deleteSeat(seatIteration) {
         }
     }
     seats = tempSeats;
-    updateSeats();
+    updateSeats(seats);
 }
 
 
@@ -1102,7 +1107,7 @@ function importSeats(file) {
             }
         });
 
-        updateSeats();
+        updateSeats(seats);
     };
 
     reader.readAsText(file);
