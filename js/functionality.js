@@ -1056,7 +1056,7 @@ function deleteEvent() {
 
 
 function addSeat() {
-
+    console.log("(typeof seats): " + (typeof seats) + " - seats: " + seats)
     if (document.querySelector("select[name='eventList']").value === "default") {
         globalAlert("alert-warning", "Which event are you adding seats to?");
         return false;
@@ -1067,6 +1067,9 @@ function addSeat() {
         globalAlert("alert-warning", "Type a seat name or ID into the field.");
         return false;
     };
+    if ((typeof seats) !== "object") {
+        seats = [];
+    }
     seats = [...seats, { "seat": seat, "occupied": "default" }];
     updateSeats(seats);
     document.querySelector("input[name='newSeat']").value = "";
