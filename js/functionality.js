@@ -340,7 +340,7 @@ function selectProfile() {
 function filterAll(inputName) {
 
 
-    let searchThis = document.querySelector("input[name='" + inputName + "']").value.toLowerCase();
+    let searchThis = document.querySelector("input[name='" + inputName + "']").value.toLowerCase().trim();
     if (searchThis.length === 0) {
         globalAlert("alert-warning", "Who are you looking for?");
         return false;
