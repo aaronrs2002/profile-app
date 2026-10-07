@@ -1147,3 +1147,73 @@ function filterSeats() {
     })
 
 }
+
+function deleteAllSeats() {
+    let whichEventNum = document.querySelector("select[name='eventList']").value;
+    if (whichEventNum === "default") {
+        globalAlert("alert-warning", "Which event?");
+        return false;
+    }
+    let whichEvent = "default";
+
+    if (localStorage.getItem("eventObj")) {
+        let tempEventObj = JSON.parse(localStorage.getItem("eventObj"));
+        whichEvent = tempEventObj[whichEventNum].task;
+        for (let i = 0; i < tempEventObj.length; i++) {
+            if (tempEventObj[i].task === whichEvent) {
+                tempEventObj[i].seats = [];
+            }
+        }
+        localStorage.setItem("eventObj", JSON.stringify(tempEventObj));
+    } else {
+        globalAlert("alert-warning", "No events listed");
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
+    if (localStorage.getItem("guestData")) {
+        let tempGuestData = JSON.parse(localStorage.getItem("guestData"));
+        for (let i = 0; i < tempGuestData.length; i++) {
+
+            console.log("tempGuestData[i].events.length: " + tempGuestData[i].events.length);
+
+            for (let j = 0; j < tempGuestData[i].events.length; j++) {
+
+                console.log("whichEvent: " + whichEvent + " - tempGuestData[i].events[j].task: " + tempGuestData[i].events[j].task);
+
+                if (tempGuestData[i].events[j].task === whichEvent) {
+
+                    console.log("tempGuestData[i].events[j].task: " + tempGuestData[i].events[j].task + " - tempGuestData[i].events[j].seat: " + tempGuestData[i].events[j].seat + " - SETTING TO default");
+                    tempGuestData[i].events[j].seat = "default";
+                    tempGuestData[i].events[j].details = "No details yet";
+                }
+
+            }
+
+
+
+        }
+        localStorage.setItem("GuestData", JSON.stringify(tempGuestData));
+    }
+
+
+    seats = [];
+    document.getElementById("seatListTarget").innerHTML = "";
+    document.getElementById("seatingTarget").innerHTML = "";
+
+
+    document.querySelector(`[data-warning='deleteAllSeatsShow']`).classList.add('hide');
+
+    document.querySelector(`[data-warning='deleteAllSeatsBt']`).classList.remove('hide');
+
+    globalAlert("alert-success", "Seats Deleted.");
+
+}

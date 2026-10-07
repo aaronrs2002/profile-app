@@ -151,6 +151,50 @@
                                     <button class="btn btn-block btn-secondary py-2" onClick="addSeat()">Add seat to
                                         venue</button>
                                 </li>
+                                <li>
+
+
+
+                                    <div class=" my-3">
+                                        <button class="btn btn-danger form-control" data-addedit="edit"
+                                            data-module="event" data-warning="deleteAllSeatsBt" onClick="javascript:
+                                    
+                                                      document.querySelector(`[data-warning='deleteAllSeatsShow']`).classList.remove('hide');
+                                                        
+                                                        document.querySelector(`[data-warning='deleteAllSeatsBt']`).classList.add('hide');
+                                                                    
+                                                                    
+                                                                    
+                                                                    ">Delete All Seats </button>
+                                        <div data-warning="deleteAllSeatsShow" class="hide ">
+                                            <div class="list-group-item list-group-item-warning p-3">
+
+                                                <p>Are you sure you want to delete all the seats for this event?</p>
+                                                <button class="btn btn-secondary p-2" onClick="javascript:
+                                                                        
+                                                       document.querySelector(`[data-warning='deleteAllSeatsShow']`).classList.add('hide');
+                                                        
+                                                        document.querySelector(`[data-warning='deleteAllSeatsBt']`).classList.remove('hide');
+                                                                    
+                                                                        ">No</button>
+                                                <button class="btn btn-danger p-2"
+                                                    onClick="deleteAllSeats()">Yes</button>
+                                            </div>
+
+                                        </div>
+
+
+
+                                    </div>
+
+
+
+
+
+
+
+
+                                </li>
                                 <li><label>Upload CSV formated seat list</label></li>
                                 <li>
                                     <input type="file" accept=".csv" onchange="importSeats(this.files[0])"
