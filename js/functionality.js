@@ -425,6 +425,13 @@ function editProfile() {
 
     let whichProfile = document.querySelector("select[name='guestList']").value;
 
+    if (localStorage.getItem("guestData")) {
+        guestData = localStorage.getItem("guestData")
+
+        guestData = JSON.parse(guestData);
+    }
+
+
     console.log("whichProfile: " + whichProfile);
     console.log("JSON.stringify(guestData): " + JSON.stringify(guestData));
 
@@ -500,6 +507,13 @@ function editProfile() {
 
 
 function selectAccount() {
+
+    if (localStorage.getItem("guestData")) {
+        guestData = localStorage.getItem("guestData")
+
+        guestData = JSON.parse(guestData);
+    }
+
 
     let whichAccount = document.querySelector("select[name='accountsTarget']").value;
     let whichProfile = document.querySelector("select[name='guestList']").value;
@@ -765,6 +779,11 @@ function selectEvent() {
 
     if (localStorage.getItem("guestData")) {
         guestData = JSON.parse(localStorage.getItem("guestData"));
+    }
+
+    let eventObj = [];
+    if (localStorage.getItem("eventObj")) {
+        eventObj = JSON.parse(localStorage.getItem("eventObj"))
     }
 
 
@@ -1181,6 +1200,7 @@ function deleteAllSeats() {
 
     if (localStorage.getItem("guestData")) {
         let tempGuestData = JSON.parse(localStorage.getItem("guestData"));
+        let tempEvents = [];
         for (let i = 0; i < tempGuestData.length; i++) {
 
             console.log("tempGuestData[i].events.length: " + tempGuestData[i].events.length);
@@ -1189,19 +1209,23 @@ function deleteAllSeats() {
 
                 console.log("whichEvent: " + whichEvent + " - tempGuestData[i].events[j].task: " + tempGuestData[i].events[j].task);
 
-                if (tempGuestData[i].events[j].task === whichEvent) {
+                if (tempGuestData[i].events[j].task !== whichEvent) {
 
-                    console.log("tempGuestData[i].events[j].task: " + tempGuestData[i].events[j].task + " - tempGuestData[i].events[j].seat: " + tempGuestData[i].events[j].seat + " - SETTING TO default");
-                    tempGuestData[i].events[j].seat = "default";
-                    tempGuestData[i].events[j].details = "No details yet";
+                    tempEvents.push(tempGuestData[i].events[j]);
+                } else {
+                    console.log("We are not pushing " + tempGuestData[i].events[j].task);
                 }
 
             }
+            tempGuestData[i].events = tempEvents;
+            guestData = tempGuestData;
+
+            console.log("JSON.stringify(guestData): " + JSON.stringify(guestData))
 
 
 
         }
-        localStorage.setItem("GuestData", JSON.stringify(tempGuestData));
+        localStorage.setItem("guestData", JSON.stringify(tempGuestData));
     }
 
 
@@ -1215,5 +1239,6 @@ function deleteAllSeats() {
     document.querySelector(`[data-warning='deleteAllSeatsBt']`).classList.remove('hide');
 
     globalAlert("alert-success", "Seats Deleted.");
+
 
 }
