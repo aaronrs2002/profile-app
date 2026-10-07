@@ -1085,13 +1085,29 @@ function deleteEvent() {
 
 
 function addSeat() {
-    console.log("(typeof seats): " + (typeof seats) + " - seats: " + seats)
+
+    let seatList = [];
+    for (let i = 0; i < seats.length; i++) {
+        seatList.push(seats[i].seat);
+    }
+
+    console.log("(typeof seats): " + (typeof seats) + " - JSON.stringify(seats): " + JSON.stringify(seats))
     if (document.querySelector("select[name='eventList']").value === "default") {
         globalAlert("alert-warning", "Which event are you adding seats to?");
         return false;
     }
 
     let seat = document.querySelector("input[name='newSeat']").value;
+    if (seatList.indexOf(seat) !== -1) {
+        console.log("seats: " + seatList + " seat: " + seat);
+        globalAlert("alert-warning", "You already have seat \"" + seat + "\" in your list.");
+        return false;
+    } else {
+        console.log("seatList.indexOf(seat) " + seatList.indexOf(seat));
+    }
+
+
+
     if (seat.length === 0) {
         globalAlert("alert-warning", "Type a seat name or ID into the field.");
         return false;
