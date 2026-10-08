@@ -629,29 +629,86 @@ START EVENT MODULE
 */
 
 let eventObj = [];
-let compareList = []
-if (localStorage.getItem('eventObj')) {
-
-    let tempEventObj = localStorage.getItem('eventObj');
-
-
-
-    let tempParse = JSON.parse(tempEventObj);
-    for (let i = 0; i < tempEventObj.length; i++) {
-        compareList.push(tempEventObj[i].task);
-    }
-    eventObj = tempParse;
-}
-
-
+let compareList = [];
 
 if (localStorage.getItem("taskList")) {
+
+
+
+
+    if (localStorage.getItem('eventObj')) {
+
+        let tempEventObj = localStorage.getItem('eventObj');
+
+
+
+        let tempParse = JSON.parse(tempEventObj);
+        for (let i = 0; i < tempParse.length; i++) {
+            compareList.push(tempParse[i].task);
+        }
+        eventObj = tempParse;
+
+        console.log("JSON.stringify(eventObj): " + JSON.stringify(eventObj));
+    }
+
+
+
 
     let tempEventObj = [];
     let tempTasks = localStorage.getItem("taskList");
     tempTasks = JSON.parse(tempTasks);
 
     for (let i = 0; i < tempTasks.length; i++) {
+
+        let seatsList = [];
+        let eventAccountName = "";
+        let eventTimeStamp = "";
+        let eventAddressStamp = "";
+        let eventEmailStamp = "";
+        let eventPhoneStamp = "";
+        let eventCoordinatorStamp = "";
+
+        if ((typeof eventObj) === "object" && eventObj.length > 0) {
+
+            console.log("JSON.stringify(eventObj): " + JSON.stringify(eventObj));
+            if (eventObj[i].seats.length > 0) {
+                seatsList = eventObj[i].seats;
+            }
+
+            if (eventObj[i].accountName) {
+                eventAccountName = eventObj[i].accountName;
+            }
+
+
+            if (eventObj[i].eventTime) {
+                eventTimeStamp = eventObj[i].eventTime;
+            }
+
+
+            if (eventObj[i].eventAddress) {
+                eventAddressStamp = eventObj[i].eventAddress;
+            }
+
+
+            if (eventObj[i].eventEmail) {
+                eventEmailStamp = eventObj[i].eventEmail;
+            }
+
+
+            if (eventObj[i].eventPhone) {
+                eventPhoneStamp = eventObj[i].eventPhone;
+            }
+
+
+            if (eventObj[i].eventCoordinator) {
+                eventCoordinatorStamp = eventObj[i].eventCoordinator;
+            }
+        }
+
+
+
+
+
         if (compareList.indexOf(tempTasks[i].task) === -1) {
             let priority = "Standard Priority";
 
@@ -665,18 +722,17 @@ if (localStorage.getItem("taskList")) {
             }
 
 
-
             tempEventObj.push({
-                accountName: "",
+                accountName: eventAccountName,
                 task: tempTasks[i].task,
                 startDate: tempTasks[i].startDate,
-                eventTime: "",
-                eventAddress: "",
-                eventEmail: "",
-                eventPhone: "",
-                eventCoordinator: "",
+                eventTime: eventTimeStamp,
+                eventAddress: eventAddressStamp,
+                eventEmail: eventEmailStamp,
+                eventPhone: eventPhoneStamp,
+                eventCoordinator: eventCoordinatorStamp,
                 taskDetails: priority + " - " + tempTasks[i].taskDetails,
-                seats: []
+                seats: seatsList
 
             });
         }
@@ -691,11 +747,11 @@ if (localStorage.getItem("taskList")) {
 
     localStorage.setItem('eventObj', JSON.stringify(eventObj));
 
-
+    buildEventMenu(eventObj);
 }
 
 
-buildEventMenu(eventObj);
+
 
 
 
@@ -745,7 +801,7 @@ function updateEvent(addEdit) {
 
             }];
 
-            localStorage.setItem("eventObj", JSON.stringify(eventObj));
+            //   localStorage.setItem("eventObj", JSON.stringify(eventObj));
 
 
 
@@ -763,6 +819,8 @@ function updateEvent(addEdit) {
             eventObj[whichEvent].eventCoordinator = document.querySelector("[name='eventCoordinator']").value;
             eventObj[whichEvent].taskDetails = document.querySelector("textarea[name='eventDetails']").value;
             eventObj[whichEvent].seats = seats;
+
+            console.log("JSON.stringify(seats): " + JSON.stringify(seats));
 
             updateSeats(seats);
 
