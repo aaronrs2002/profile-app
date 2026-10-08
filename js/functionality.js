@@ -685,7 +685,11 @@ if (localStorage.getItem("taskList")) {
 
     }
 
-    eventObj = [...eventObj, ...tempEventObj];
+    //eventObj = [...eventObj, ...tempEventObj];
+
+    eventObj = tempEventObj;
+
+    localStorage.setItem('eventObj', JSON.stringify(eventObj));
 
 
 }
