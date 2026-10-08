@@ -1,6 +1,10 @@
 let guestData = [];
 let activeUser = "";
 let seats = [];
+let eventObj = [];
+if (localStorage.getItem("eventObj")) {
+    eventObj = JSON.parse(localStorage.getItem("eventObj"))
+}
 
 
 const ValidateProfile = (fields) => {
@@ -157,7 +161,7 @@ function selectProfile() {
         clearForms();
         return false;
     }
-    let eventObj = [];
+    eventObj = [];
     if (localStorage.getItem("eventObj")) {
         eventObj = JSON.parse(localStorage.getItem("eventObj"))
     }
@@ -628,7 +632,7 @@ START EVENT MODULE
 
 */
 
-let eventObj = [];
+
 let compareList = [];
 
 if (localStorage.getItem("taskList")) {
@@ -654,14 +658,14 @@ if (localStorage.getItem("taskList")) {
 
 
 
-    let tempEventObj = [];
+    //let tempEventObj = [];
     let tempTasks = localStorage.getItem("taskList");
     tempTasks = JSON.parse(tempTasks);
 
     for (let i = 0; i < tempTasks.length; i++) {
 
         let seatsList = [];
-        let eventAccountName = "";
+        let eventAccountNameStamp = "";
         let eventTimeStamp = "";
         let eventAddressStamp = "";
         let eventEmailStamp = "";
@@ -671,35 +675,37 @@ if (localStorage.getItem("taskList")) {
         if ((typeof eventObj) === "object" && eventObj.length > 0) {
 
             console.log("JSON.stringify(eventObj): " + JSON.stringify(eventObj));
+            console.log("eventObj[i].seats.length: " + eventObj[i].seats.length);
             if (eventObj[i].seats.length > 0) {
                 seatsList = eventObj[i].seats;
             }
 
+            console.log("eventObj[i].accountName: " + eventObj[i].accountName);
             if (eventObj[i].accountName) {
-                eventAccountName = eventObj[i].accountName;
+                eventAccountNameStamp = eventObj[i].accountName;
             }
 
-
+            console.log("eventObj[i].eventTime: " + eventObj[i].eventTime);
             if (eventObj[i].eventTime) {
                 eventTimeStamp = eventObj[i].eventTime;
             }
 
-
+            console.log("eventObj[i].eventAddress : " + eventObj[i].eventAddress);
             if (eventObj[i].eventAddress) {
                 eventAddressStamp = eventObj[i].eventAddress;
             }
 
-
+            console.log('eventObj[i].eventEmail: ' + eventObj[i].eventEmail);
             if (eventObj[i].eventEmail) {
                 eventEmailStamp = eventObj[i].eventEmail;
             }
 
-
+            console.log("eventObj[i].eventPhone: " + eventObj[i].eventPhone);
             if (eventObj[i].eventPhone) {
                 eventPhoneStamp = eventObj[i].eventPhone;
             }
 
-
+            console.log("eventObj[i].eventCoordinator: " + eventObj[i].eventCoordinator);
             if (eventObj[i].eventCoordinator) {
                 eventCoordinatorStamp = eventObj[i].eventCoordinator;
             }
@@ -722,8 +728,8 @@ if (localStorage.getItem("taskList")) {
             }
 
 
-            tempEventObj.push({
-                accountName: eventAccountName,
+            eventObj.push({
+                accountName: eventAccountNameStamp,
                 task: tempTasks[i].task,
                 startDate: tempTasks[i].startDate,
                 eventTime: eventTimeStamp,
@@ -743,7 +749,7 @@ if (localStorage.getItem("taskList")) {
 
     //eventObj = [...eventObj, ...tempEventObj];
 
-    eventObj = tempEventObj;
+
 
     localStorage.setItem('eventObj', JSON.stringify(eventObj));
 
@@ -843,7 +849,7 @@ function selectEvent() {
         guestData = JSON.parse(localStorage.getItem("guestData"));
     }
 
-    let eventObj = [];
+    eventObj = [];
     if (localStorage.getItem("eventObj")) {
         eventObj = JSON.parse(localStorage.getItem("eventObj"))
     }
@@ -942,7 +948,7 @@ function updateProfileTask() {
     let seatAssignmentHTML = "";
     let detailsHTML = "";
     let usedAssigned = [];
-    let eventObj = [];
+    eventObj = [];
     if (localStorage.getItem("eventObj")) {
         eventObj = JSON.parse(localStorage.getItem("eventObj"))
     }
@@ -1107,7 +1113,7 @@ function deleteEvent() {
     } else {
         console.log("activeEvent: " + activeEvent);
     }
-    let eventObj = [];
+    eventObj = [];
     let tempEvents = [];
     if (localStorage.getItem("eventObj")) {
         console.log("localStorage: " + localStorage.getItem("eventObj"))
