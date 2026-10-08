@@ -649,6 +649,7 @@ if (localStorage.getItem("taskList")) {
         let tempParse = JSON.parse(tempEventObj);
         for (let i = 0; i < tempParse.length; i++) {
             compareList.push(tempParse[i].task);
+            console.log("tempParse[i].seats.length: " + tempParse[i].seats.length);
         }
         eventObj = tempParse;
 
@@ -1235,7 +1236,18 @@ function importSeats(file) {
 /*start filter search seats*/
 
 function filterSeats() {
+
+    if (seats.length === 0) {
+        globalAlert("alert-info", "No seats have been submitted for this event.");
+        return false;
+    }
+
+
     let searchStr = document.querySelector("input[name='seatSearch']").value;
+    if (searchStr.length === 0) {
+        globalAlert("alert-warning", "The input field is empty. This will reset your search.");
+        // return false;
+    }
     searchStr = searchStr.toLowerCase();
     [].forEach.call(document.querySelectorAll(".badge[data-seat]"), (e) => {
         console.log("e.dataset.seat: " + e.dataset.seat);
