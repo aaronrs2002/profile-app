@@ -2,8 +2,12 @@ let guestData = [];
 let activeUser = "";
 let seats = [];
 let eventObj = [];
+let tempTasks = [];
 if (localStorage.getItem("eventObj")) {
     eventObj = JSON.parse(localStorage.getItem("eventObj"))
+}
+if (localStorage.getItem("taskList")) {
+    tempTasks = JSON.parse(localStorage.getItem("taskList"));
 }
 
 
@@ -97,33 +101,33 @@ function buildEventMenu(eventObj) {
 
 /*
 async function fetchGuest() {
-
-
-
+ 
+ 
+ 
     //  await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second
     const response = await fetch("../localdata/guestInfo.json");
     const contents = await response.json();
     return contents;
 }
-
-
+ 
+ 
 const buildGuests = async () => {
-
-
-
+ 
+ 
+ 
     const result = await fetchGuest();
-
+ 
     guestData = result;
-
+ 
     localStorage.setItem("guestData", JSON.stringify(guestData));
-
+ 
     let guestSelectList = "<option value='default'>Select Profile</option>";
-
+ 
     for (let i = 0; i < result.length; i++) {
         guestSelectList = guestSelectList + "<option value='" + i + "'>" + result[i].fName + " " + result[i].lName + "</option>"
     }
-
-
+ 
+ 
     document.querySelector("select[name='guestList']").innerHTML = guestSelectList;
 };*/
 function buildSelectMenu() {
@@ -305,17 +309,15 @@ function selectProfile() {
 
 
 
-    if (localStorage.getItem("taskList")) {
-        let tempTasks = localStorage.getItem("taskList");
-        tempTasks = JSON.parse(tempTasks);
 
-        let taskListStr = "";
-        for (let i = 0; i < tempTasks.length; i++) {
 
-            taskListStr = taskListStr + `<li class="list-group-item"><input type="checkbox" name="taskItem" onChange="updateProfileTask()" value="${tempTasks[i].task}"/> - ${tempTasks[i].task}<li>`;
-        }
-        document.getElementById("taskListTarget").innerHTML = taskListStr;
+    let taskListStr = "";
+    for (let i = 0; i < tempTasks.length; i++) {
+
+        taskListStr = taskListStr + `<li class="list-group-item"><input type="checkbox" name="taskItem" onChange="updateProfileTask()" value="${tempTasks[i].task}"/> - ${tempTasks[i].task}<li>`;
     }
+    document.getElementById("taskListTarget").innerHTML = taskListStr;
+
 
 
     for (let i = 0; i < guestData.length; i++) {
@@ -629,7 +631,7 @@ START EVENT MODULE
                     <label>Event Coordinator</label>
                     <input type="text" class="form-control" name="eventCoordinator" />
                     <textarea name='eventDetails'/>
-
+ 
 */
 
 
@@ -660,8 +662,8 @@ if (localStorage.getItem("taskList")) {
 
 
     //let tempEventObj = [];
-    let tempTasks = localStorage.getItem("taskList");
-    tempTasks = JSON.parse(tempTasks);
+    /* let tempTasks = localStorage.getItem("taskList");
+     tempTasks = JSON.parse(tempTasks);*/
 
     for (let i = 0; i < tempTasks.length; i++) {
 
@@ -827,16 +829,22 @@ function updateEvent(addEdit) {
             eventObj[whichEvent].taskDetails = document.querySelector("textarea[name='eventDetails']").value;
             eventObj[whichEvent].seats = seats;
 
-            console.log("JSON.stringify(seats): " + JSON.stringify(seats));
-
             updateSeats(seats);
 
+            for (let i = 0; i < tempTasks.length; i++) {
+                if (eventObj[whichEvent].task === tempTasks[i].task) {
+                    if ((typeof tempTasks) === "object") {
+                        tempTasks[i].taskDetails = eventObj[whichEvent].taskDetails;
+                    }
+                }
+            }
 
 
             break;
 
     }
 
+    localStorage.setItem("taskList", JSON.stringify(tempTasks));
     localStorage.setItem("eventObj", JSON.stringify(eventObj));
 
     globalAlert("alert-success", addEdit + " was successful!");
@@ -1145,10 +1153,10 @@ function deleteEvent() {
 }
 
 /*
-
-
+ 
+ 
 [{"accountName":"","task":"new","startDate":"2025-11-02","eventTime":"","eventAddress":"","eventEmail":"","eventPhone":"","eventCoordinator":"","taskDetails":"new"},{"accountName":"","task":"dfdrgerab","startDate":"2025-11-06","eventTime":"","eventAddress":"","eventEmail":"","eventPhone":"","eventCoordinator":"","taskDetails":"No Details"},{"accountName":"","task":"new try task here","startDate":"2026-06-11","eventTime":"","eventAddress":"","eventEmail":"","eventPhone":"","eventCoordinator":"","taskDetails":"No Details"}]
-
+ 
 */
 
 
