@@ -675,45 +675,54 @@ if (localStorage.getItem("taskList")) {
         let eventPhoneStamp = "";
         let eventCoordinatorStamp = "";
 
-        if ((typeof eventObj) === "object" && eventObj.length > 0) {
+        try {
 
-            console.log("JSON.stringify(eventObj): " + JSON.stringify(eventObj));
-            console.log("eventObj[i].seats.length: " + eventObj[i].seats.length);
-            if (eventObj[i].seats.length > 0) {
-                seatsList = eventObj[i].seats;
+
+            if ((typeof eventObj) === "object" && eventObj.length > 0) {
+
+                console.log("JSON.stringify(eventObj): " + JSON.stringify(eventObj));
+                console.log("eventObj[i].seats.length: " + eventObj[i].seats.length);
+                if (eventObj[i].seats.length > 0) {
+                    seatsList = eventObj[i].seats;
+                }
+
+                console.log("eventObj[i].accountName: " + eventObj[i].accountName);
+                if (eventObj[i].accountName) {
+                    eventAccountNameStamp = eventObj[i].accountName;
+                }
+
+                console.log("eventObj[i].eventTime: " + eventObj[i].eventTime);
+                if (eventObj[i].eventTime) {
+                    eventTimeStamp = eventObj[i].eventTime;
+                }
+
+                console.log("eventObj[i].eventAddress : " + eventObj[i].eventAddress);
+                if (eventObj[i].eventAddress) {
+                    eventAddressStamp = eventObj[i].eventAddress;
+                }
+
+                console.log('eventObj[i].eventEmail: ' + eventObj[i].eventEmail);
+                if (eventObj[i].eventEmail) {
+                    eventEmailStamp = eventObj[i].eventEmail;
+                }
+
+                console.log("eventObj[i].eventPhone: " + eventObj[i].eventPhone);
+                if (eventObj[i].eventPhone) {
+                    eventPhoneStamp = eventObj[i].eventPhone;
+                }
+
+                console.log("eventObj[i].eventCoordinator: " + eventObj[i].eventCoordinator);
+                if (eventObj[i].eventCoordinator) {
+                    eventCoordinatorStamp = eventObj[i].eventCoordinator;
+                }
             }
 
-            console.log("eventObj[i].accountName: " + eventObj[i].accountName);
-            if (eventObj[i].accountName) {
-                eventAccountNameStamp = eventObj[i].accountName;
-            }
 
-            console.log("eventObj[i].eventTime: " + eventObj[i].eventTime);
-            if (eventObj[i].eventTime) {
-                eventTimeStamp = eventObj[i].eventTime;
-            }
 
-            console.log("eventObj[i].eventAddress : " + eventObj[i].eventAddress);
-            if (eventObj[i].eventAddress) {
-                eventAddressStamp = eventObj[i].eventAddress;
-            }
-
-            console.log('eventObj[i].eventEmail: ' + eventObj[i].eventEmail);
-            if (eventObj[i].eventEmail) {
-                eventEmailStamp = eventObj[i].eventEmail;
-            }
-
-            console.log("eventObj[i].eventPhone: " + eventObj[i].eventPhone);
-            if (eventObj[i].eventPhone) {
-                eventPhoneStamp = eventObj[i].eventPhone;
-            }
-
-            console.log("eventObj[i].eventCoordinator: " + eventObj[i].eventCoordinator);
-            if (eventObj[i].eventCoordinator) {
-                eventCoordinatorStamp = eventObj[i].eventCoordinator;
-            }
+        } catch (error) {
+            console.log("There are no seats fior this event yet: " + error);
+            seatsList = [];
         }
-
 
 
 
