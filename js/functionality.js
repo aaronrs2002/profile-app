@@ -1127,7 +1127,7 @@ function deleteTask(task, email) {
 
 }
 
-
+/*
 function deleteEvent() {
 
     let selectedFromMenu = document.querySelector("select[name='eventList'] option:checked").innerHTML;
@@ -1195,7 +1195,7 @@ function deleteEvent() {
 
     // document.querySelector(`[data - warning= 'deleteEventBt']`).classList.remove('hide');
 
-}
+}*/
 
 /*
  

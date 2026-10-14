@@ -223,6 +223,11 @@
                             <button class="btn btn-block btn-success py-2 mt-2 hide" data-addedit="edit"
                                 data-module="event" onClick="updateEvent('edit')">Edit
                                 Event</button>
+                            <div class="alert-info alert mt-4 hide" data-addedit="edit" data-module="event">
+                                <p><i>Events must be deleted in the <a
+                                            href="https://aaronrs2002.github.io/task-master/">
+                                            Task Master</a> module where they were created.</i></p>
+                            </div>
 
                         </div>
 
@@ -232,14 +237,14 @@
 
 
 
-                        <div class="col-md-12 my-3">
+                        <!-- <div class="col-md-12 my-3">
                             <button class="btn btn-danger form-control hide" data-addedit="edit" data-module="event"
                                 data-warning="deleteEventBt" onClick="javascript:
 
-                  document.querySelector(`[data-warning='deleteEventShow']`).classList.remove('hide');
-                    
-                    document.querySelector(`[data-warning='deleteEventBt']`).classList.add('hide');
-                                
+                                    document.querySelector(`[data-warning='deleteEventShow']`).classList.remove('hide');
+                                        
+                                        document.querySelector(`[data-warning='deleteEventBt']`).classList.add('hide');
+                                                    
                                 
                                 
                                 ">Delete Event</button>
@@ -251,10 +256,10 @@
                                     <p>Are you sure you want to delete this event?</p>
                                     <button class="btn btn-secondary p-2" onClick="javascript:
                                     
-                   document.querySelector(`[data-warning='deleteEventShow']`).classList.add('hide');
-                    
-                    document.querySelector(`[data-warning='deleteEventBt']`).classList.remove('hide');
-                                
+                                        document.querySelector(`[data-warning='deleteEventShow']`).classList.add('hide');
+                                            
+                                            document.querySelector(`[data-warning='deleteEventBt']`).classList.remove('hide');
+                                                        
                                     ">No</button>
                                     <button class="btn btn-danger p-2" onClick="deleteEvent()">Yes</button>
                                 </div>
@@ -263,7 +268,7 @@
 
 
 
-                        </div>
+                        </div>-->
 
 
 
