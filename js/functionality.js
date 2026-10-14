@@ -863,6 +863,8 @@ function updateEvent(addEdit) {
 let searchGuestData = [];
 function selectEvent() {
 
+    let selectedFromMenu = document.querySelector("select[name='eventList'] option:checked").innerHTML;
+
     if (localStorage.getItem("guestData")) {
         guestData = JSON.parse(localStorage.getItem("guestData"));
     }
@@ -1038,6 +1040,10 @@ function updateProfileTask() {
         }
 
     });
+
+
+
+
     for (let i = 0; i < guestData.length; i++) {
         if (activeUser === guestData[i].email) {
 
@@ -1124,6 +1130,8 @@ function deleteTask(task, email) {
 
 function deleteEvent() {
 
+    let selectedFromMenu = document.querySelector("select[name='eventList'] option:checked").innerHTML;
+
     let activeEvent = document.querySelector("select[name='eventList']").value;
     if (activeEvent === "default") {
         console.log("default is the value");
@@ -1141,12 +1149,40 @@ function deleteEvent() {
         return false;
     }
 
+
+
     for (let i = 0; i < eventObj.length; i++) {
-        if (i !== Number(activeEvent)) {
+        if (eventObj[i].task !== selectedFromMenu) {
             tempEvents.push(eventObj[i]);
+        } else {
+            console.log("we are deleting: " + selectedFromMenu);
         }
     }
 
+    guestData = [];
+    if (localStorage.getItem("guestData")) {
+        guestData = JSON.parse(localStorage.getItem("guestData"));
+    }
+
+    let tempGuestData = [];
+
+    for (let i = 0; i < guestData.length; i++) {
+
+        let pushTask = true;
+
+        for (let j = 0; j < guestData[i].events.length; j++) {
+
+            if (guestData[i].events[j].task === selectedFromMenu) {
+                pushTask = false;
+            }
+
+        }
+        if (pushTask) {
+            tempGuestData.push(guestData[i]);
+        }
+
+    }
+    localStorage.setItem("guestData", JSON.stringify(tempGuestData));
 
 
     eventObj = tempEvents;
